@@ -1,12 +1,19 @@
-import mongoose from 'mongoose';
+import {Schema,model,Document} from 'mongoose';
 
-const studentSchema = new mongoose.Schema({
+export interface StudentDocument extends Document {
+    name: string;
+    studentID: string;
+    email: string;
+    phone: string;
+}
+
+const studentSchema = new Schema<StudentDocument>({
     name: { type: String, required: true },
     studentID : { type: String, required: true },
-    email: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
     phone: { type: String, required: true }
 });
 
-const Student = mongoose.model('Student', studentSchema);
+const Student = model('Student', studentSchema);
 
 export default Student;
