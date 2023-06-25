@@ -4,7 +4,7 @@ import mongoose from 'mongoose'
 dotenv.config();
 
 const port: number = parseInt(process.env.PORT || '3000');
-const db = process.env.DB as string
+const db = process.env.DB_URL as string
 
 export const connectDb = async (connectionString: string) => {
     try {
@@ -17,5 +17,5 @@ export const connectDb = async (connectionString: string) => {
 
 app.listen(port, () => {
     console.log(`Library service running on port ${port}...`);
-    // connectDb(db);
+    connectDb(db);
 });
