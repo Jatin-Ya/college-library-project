@@ -10,7 +10,7 @@ export const getStudents: RequestHandler<{}, { data?: StudentDocument[], message
     phone?: string,
 }> = async (req, res) => {
     try {
-        const students = await Student.find(req.query);
+        const students = await Student.find(req.query).populate('books');
         if (!students) throw new Error("No students found");
         res.status(200).json({ data: students, message: "Students retrieved successfully" });
     } catch (err: any) {
@@ -32,7 +32,7 @@ export const createStudent: RequestHandler<{}, { message: string, data?: Student
 export const getStudent: RequestHandler<{ id: string }, { data?: StudentDocument, message: string }, {}, {}> = async (req, res) => {
     const { id } = req.params;
     try {
-        const student = await Student.findById(id);
+        const student = await Student.findById(id).populate('books');
         if (!student) throw new Error("Student not found");
         res.status(200).json({ data: student, message: "Student retrieved successfully" });
     } catch (err: any) {

@@ -5,13 +5,15 @@ export interface StudentDocument extends Document {
     studentID: string;
     email: string;
     phone: string;
+    books: Schema.Types.ObjectId[];
 }
 
 const studentSchema = new Schema<StudentDocument>({
     name: { type: String, required: true },
     studentID : { type: String, required: true },
     email: { type: String, required: true, unique: true },
-    phone: { type: String, required: true }
+    phone: { type: String, required: true },
+    books: [{ type: Schema.Types.ObjectId, ref: 'Book' }]
 });
 
 const Student = model('Student', studentSchema);
