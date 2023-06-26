@@ -17,8 +17,4 @@ router.
     .patch(updateStudent);
 
 
-router.
-    route('/:id/addBook')
-    .patch(addBook);
-
 export default router;

@@ -61,3 +61,18 @@ export const updateStudent: RequestHandler<{id : string}, { message: string, dat
         res.status(404).json({ message: err.message });
     }
 }
+
+export const addBook: RequestHandler<{id : string}, { message: string, data?: StudentDocument }, {bookID: string}, {}> = async (req, res) => {
+    const { id } = req.params;
+    const { bookID } = req.body;
+    try {
+        const student = await Student.findById(id);
+        if (!student) throw new Error("Student not found");
+        student.books.push(bookID);
+        await student.save();
+        res.status(200).json({ data: student, message: "Book added successfully" });
+    }
+    catch (err: any) {
+        res.status(404).json({ message: err.message });
+    }
+}
