@@ -9,7 +9,7 @@ booksRouter.
     .post(createBook);
 
 booksRouter.
-    route('/:id')
+    route('/:code')
     .get(getBook)
     .delete(deleteBook)
     .patch(updateBook);

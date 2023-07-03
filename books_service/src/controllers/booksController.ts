@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express';
 
-import Book, { BookDocument } from '../models/bookModel';
+import Book, { BookDocument } from '../models/booksModel';
 import { Types } from 'mongoose';
 
 export const getBooks: RequestHandler<{}, { data?: BookDocument[], message: string }, {}, {
@@ -29,10 +29,10 @@ export const createBook: RequestHandler<{}, { message: string, data?: BookDocume
     }
 }
 
-export const getBook: RequestHandler<{ id: string }, { data?: BookDocument, message: string }, {}, {}> = async (req, res) => {
-    const { id } = req.params;
+export const getBook: RequestHandler<{ code: string }, { data?: BookDocument, message: string }, {}, {}> = async (req, res) => {
+    const { code } = req.params;
     try {
-        const book = await Book.findById(id).populate('issuedTo');
+        const book = await Book.findOne({code}).populate('issuedTo');
         if (!book) throw new Error("Book not found");
 
         res.status(200).json({ data: book, message: "Book retrieved successfully" });
@@ -41,10 +41,10 @@ export const getBook: RequestHandler<{ id: string }, { data?: BookDocument, mess
     }
 }
 
-export const deleteBook: RequestHandler<{ id: string }, { message: string }, {}, {}> = async (req, res) => {
-    const { id } = req.params;
+export const deleteBook: RequestHandler<{ code: string }, { message: string }, {}, {}> = async (req, res) => {
+    const { code } = req.params;
     try {
-        const book = Book.findByIdAndRemove(id);
+        const book = Book.findOneAndRemove({code});
         if (!book) throw new Error("Book not found");
         res.status(200).json({ message: "Book deleted successfully" });
     } catch (err: any) {
@@ -52,10 +52,10 @@ export const deleteBook: RequestHandler<{ id: string }, { message: string }, {},
     }
 }
 
-export const updateBook: RequestHandler<{ id: string }, { message: string, data?: BookDocument }, Partial<BookDocument>, {}> = async (req, res) => {
-    const { id } = req.params;
+export const updateBook: RequestHandler<{ code: string }, { message: string, data?: BookDocument }, Partial<BookDocument>, {}> = async (req, res) => {
+    const { code } = req.params;
     try {
-        const book = await Book.findByIdAndUpdate(id, req.body, { new: true });
+        const book = await Book.findOneAndUpdate({code}, req.body, { new: true });
         if (!book) throw new Error("Book not found");
         res.status(200).json({ data: book, message: "Book updated successfully" });
     } catch (err: any) {

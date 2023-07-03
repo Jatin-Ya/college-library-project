@@ -3,7 +3,7 @@ import dotenv from 'dotenv'
 import mongoose from 'mongoose'
 dotenv.config();
 
-const port: number = parseInt(process.env.PORT || '3000');
+const port: number = parseInt(process.env.PORT || '8080');
 const db = process.env.DB_URL as string
 
 export const connectDb = async (connectionString: string) => {

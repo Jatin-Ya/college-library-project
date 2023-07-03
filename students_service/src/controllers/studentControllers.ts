@@ -29,10 +29,10 @@ export const createStudent: RequestHandler<{}, { message: string, data?: Student
     }
 }
 
-export const getStudent: RequestHandler<{ id: string }, { data?: StudentDocument, message: string }, {}, {}> = async (req, res) => {
-    const { id } = req.params;
+export const getStudent: RequestHandler<{ studentID: string }, { data?: StudentDocument, message: string }, {}, {}> = async (req, res) => {
+    const { studentID } = req.params;
     try {
-        const student = await Student.findById(id).populate('books');
+        const student = await Student.findOne({studentID}).populate('books');
         if (!student) throw new Error("Student not found");
         res.status(200).json({ data: student, message: "Student retrieved successfully" });
     } catch (err: any) {
@@ -40,10 +40,10 @@ export const getStudent: RequestHandler<{ id: string }, { data?: StudentDocument
     }
 }
 
-export const deleteStudent: RequestHandler<{ id: string }, { message: string }, {}, {}> = async (req, res) => {
-    const { id } = req.params;
+export const deleteStudent: RequestHandler<{ studentID: string }, { message: string }, {}, {}> = async (req, res) => {
+    const { studentID } = req.params;
     try {
-        const student = await Student.findByIdAndRemove(id);
+        const student = await Student.findOneAndRemove({studentID});
         if (!student) throw new Error("Student not found");
         res.status(200).json({ message: "Student deleted successfully" });
     } catch (err: any) {
@@ -51,10 +51,10 @@ export const deleteStudent: RequestHandler<{ id: string }, { message: string }, 
     }
 }
 
-export const updateStudent: RequestHandler<{id : string}, { message: string, data?: StudentDocument }, Partial<StudentDocument>, {}> = async (req, res) => {
+export const updateStudent: RequestHandler<{studentID : string}, { message: string, data?: StudentDocument }, Partial<StudentDocument>, {}> = async (req, res) => {
     try {
-        const { id } = req.params;
-        const updatedStudent = await Student.findByIdAndUpdate(id, req.body, { new: true });
+        const { studentID } = req.params;
+        const updatedStudent = await Student.findOneAndUpdate({studentID}, req.body, { new: true });
         if (!updatedStudent) throw new Error("Student not found");
         res.status(200).json({ data: updatedStudent, message: "Student updated successfully" });
     } catch (err: any) {
@@ -62,15 +62,30 @@ export const updateStudent: RequestHandler<{id : string}, { message: string, dat
     }
 }
 
-export const addBook: RequestHandler<{id : string}, { message: string, data?: StudentDocument }, {bookID: string}, {}> = async (req, res) => {
-    const { id } = req.params;
+export const addBook: RequestHandler<{studentID : string}, { message: string, data?: StudentDocument }, {bookID: Types.ObjectId}, {}> = async (req, res) => {
+    const { studentID } = req.params;
     const { bookID } = req.body;
     try {
-        const student = await Student.findById(id);
+        const student = await Student.findOne({studentID});
         if (!student) throw new Error("Student not found");
         student.books.push(bookID);
         await student.save();
         res.status(200).json({ data: student, message: "Book added successfully" });
+    }
+    catch (err: any) {
+        res.status(404).json({ message: err.message });
+    }
+}
+
+export const removeBook: RequestHandler<{studentID : string}, { message: string, data?: StudentDocument }, {bookID: Types.ObjectId}, {}> = async (req, res) => {
+    const { studentID } = req.params;
+    const { bookID } = req.body;
+    try {
+        const student = await Student.findOne({studentID});
+        if (!student) throw new Error("Student not found");
+        student.books = student.books.filter((book) => book.toString() !== bookID.toString());
+        await student.save();
+        res.status(200).json({ data: student, message: "Book removed successfully" });
     }
     catch (err: any) {
         res.status(404).json({ message: err.message });

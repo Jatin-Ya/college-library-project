@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { getStudents, createStudent, getStudent, deleteStudent, updateStudent, addBook } from '../controllers/studentControllers';
+import { getStudents, createStudent, getStudent, deleteStudent, updateStudent, addBook, removeBook } from '../controllers/studentControllers';
 // import { getStudents} from '../controllers/studentControllers';
 
 const router = express.Router();
@@ -11,14 +11,18 @@ router.
     .post(createStudent);
 
 router.
-    route('/:id')
+    route('/:studentID')
     .get(getStudent)
     .delete(deleteStudent)
     .patch(updateStudent);
 
 
 router.
-    route('/:id/addBook')
+    route('/:studentID/addBook')
     .patch(addBook);
+
+router.
+    route('/:studentID/removeBook')
+    .patch(removeBook);
 
 export default router;

@@ -1,0 +1,29 @@
+version: '3.9'
+services:
+  books_service:
+    build: ./books_service
+    # ports:
+    #   - "8040:8040"
+    volumes:
+      - ./books_service/src:/app/src
+    env_file:
+      - ./books_service/.env
+  students_service:
+    build: ./students_service
+    # ports:
+    #   - "8041:8041"
+    volumes:
+      - ./students_service/src:/app/src
+    env_file:
+      - ./students_service/.env
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend/src:/app/src
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - books_service
+      - students_service

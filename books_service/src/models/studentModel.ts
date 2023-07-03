@@ -1,12 +1,11 @@
-import {Schema,model,Document,Types} from 'mongoose';
-import Book from './booksModel';
+import {Schema,model,Document} from 'mongoose';
 
 export interface StudentDocument extends Document {
     name: string;
     studentID: string;
     email: string;
     phone: string;
-    books: Types.ObjectId[];
+    books: Schema.Types.ObjectId[];
 }
 
 const studentSchema = new Schema<StudentDocument>({
@@ -14,7 +13,7 @@ const studentSchema = new Schema<StudentDocument>({
     studentID : { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
     phone: { type: String, required: true },
-    books: [{ type: Schema.Types.ObjectId, ref: Book }]
+    books: [{ type: Schema.Types.ObjectId, ref: 'Book' }]
 });
 
 const Student = model('Student', studentSchema);
