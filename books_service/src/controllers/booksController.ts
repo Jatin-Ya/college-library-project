@@ -44,7 +44,8 @@ export const getBook: RequestHandler<{ code: string }, { data?: BookDocument, me
 export const deleteBook: RequestHandler<{ code: string }, { message: string }, {}, {}> = async (req, res) => {
     const { code } = req.params;
     try {
-        const book = Book.findOneAndRemove({code});
+        const book = await Book.findOneAndRemove({code});
+        // console.log(book);
         if (!book) throw new Error("Book not found");
         res.status(200).json({ message: "Book deleted successfully" });
     } catch (err: any) {
