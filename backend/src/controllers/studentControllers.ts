@@ -14,7 +14,7 @@ export const getStudents: RequestHandler<{}, { students?: StudentDocument[], mes
         ...req.query,
     });
 
-    const url = `http://students_service:8080/api/v1/students?${params.toString()}`;
+    const url = `${process.env.students_service}/api/v1/students?${params.toString()}`;
 
     try {
         const sres = await axios.get(url);
@@ -28,7 +28,7 @@ export const getStudents: RequestHandler<{}, { students?: StudentDocument[], mes
 
 export const createStudent: RequestHandler<{}, { message: string, student?: StudentDocument & { _id: Types.ObjectId } }, StudentDocument, {}> = async (req, res) => {
     try{
-        const sres = await axios.post('http://students_service:8080/api/v1/students', req.body);
+        const sres = await axios.post(`${process.env.students_service}/api/v1/students`, req.body);
         const student = sres.data.data;
         res.status(201).json({ student, message: "Student created successfully" });
     }
@@ -40,7 +40,7 @@ export const createStudent: RequestHandler<{}, { message: string, student?: Stud
 export const getStudent: RequestHandler<{ studentID: string }, { student?: StudentDocument, message: string }, {}, {}> = async (req, res) => {
     const { studentID } = req.params;
     try {
-        const sres = await axios.get(`http://students_service:8080/api/v1/students/${studentID}`);
+        const sres = await axios.get(`${process.env.students_service}/api/v1/students/${studentID}`);
         const student = sres.data.data;
         if (!student) throw new Error("Student not found");
         res.status(200).json({ student, message: "Student details retrieved successfully" });
@@ -52,7 +52,7 @@ export const getStudent: RequestHandler<{ studentID: string }, { student?: Stude
 export const deleteStudent: RequestHandler<{ studentID: string }, { message: string }, {}, {}> = async (req, res) => {
     const { studentID } = req.params;
     try {
-        const sres = await axios.delete(`http://students_service:8080/api/v1/students/${studentID}`);
+        const sres = await axios.delete(`${process.env.students_service}/api/v1/students/${studentID}`);
         const student = sres.data;
         if (!student) throw new Error("Student not found");
         res.status(200).json({ message: "Student deleted successfully" });
@@ -64,7 +64,7 @@ export const deleteStudent: RequestHandler<{ studentID: string }, { message: str
 export const updateStudent: RequestHandler<{ studentID: string }, { message: string, student?: StudentDocument }, Partial<StudentDocument>, {}> = async (req, res) => {
     try {
         const { studentID } = req.params;
-        const sres = await axios.patch(`http://students_service:8080/api/v1/students/${studentID}`, req.body);
+        const sres = await axios.patch(`${process.env.students_service}/api/v1/students/${studentID}`, req.body);
         const student = sres.data.data;
         if (!student) throw new Error("Student not found");
         res.status(200).json({ student, message: "Student updated successfully" });
