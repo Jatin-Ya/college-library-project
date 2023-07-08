@@ -9,7 +9,7 @@ import chai from "chai";
 import chaiHttp from "chai-http";
 import app from "./src/app";
 
-import { describe, it, beforeEach } from "node:test";
+import { describe, it, afterEach } from "node:test";
 
 import e, { Request, Response } from "express";
 
@@ -20,126 +20,100 @@ const expect = chai.expect;
 const testBook = {
     title: "The Colour of Magic",
     description: "The Colour of Magic is a 1983 comic fantasy novel by Terry Pratchett, and is the first book of the Discworld series.",
-    code: "1",
+    code: "Test1",
     author: "Terry Pratchett",
     issuedTo: null
 };
 
+const testStudent = {
+    name: "Test User",
+    studentID: "Test2",
+    email: "teststudent@test.com",
+    phone: "0123456789"
+};
+
 describe("Books", () => {
-    describe("GET /books", () => {
-        it("should return all books", (done: any) => {
-            chai
-                .request(app)
-                .get("/api/v1/books")
-                .end((err: any, res: any) => {
-                    // console.log(res.body);
-                    expect(res).to.have.status(200);
-                    expect(res.body.books).to.be.an("array");
+    afterEach(async (done) => {
+        try {
+            await chai.request(app).delete("/api/v1/books/Test1");
+        } catch (err) {}
+        try {
+            await chai.request(app).delete("/api/v1/students/Test2");
+        } catch (err) {}
+        // done();
+    });
+    it ("should return all books", async () => {
+        await chai.request(app).post("/api/v1/books").send(testBook);
 
-                    // done();
-                });
-        });
-        it("should return one book", async (done: any) => {
-
-            await chai
-                .request(app)
-                .post("/api/v1/books")
-                .send(testBook)
-
-            const res = await chai
-                .request(app)
-                .get("/api/v1/books/1")
-            await chai
-                .request(app)
-                .delete("/api/v1/books/1")
-            expect(res).to.have.status(200);
-            expect(res.body).to.be.an("object");
-            // expect(res.body.book).to.be.equal(testBook);
-            // done();
-
-
-
-        })
-
-        it("should create a new book", async (done: any) => {
-            const res = await chai
-                .request(app)
-                .post("/api/v1/books")
-                .send(testBook)
-            await chai
-                .request(app)
-                .delete("/api/v1/books/1")
-            expect(res).to.have.status(201);
-            expect(res.body).to.be.an("object");
-            // expect(res.body.book).to.be.equal(testBook);
-        })
-
-        it("should delete a book", async (done: any) => {
-
-            await chai
-                .request(app)
-                .post("/api/v1/books")
-                .send(testBook)
-
-            const res = await chai
-                .request(app)
-                .delete("/api/v1/books/1")
-            console.log(res.body);
-            expect(res).to.have.status(200);
-            expect(res.body).to.be.an("object");
-            // expect(res.body.book).to.be.equal(testBook);
-
-        })
-
-        it("should update a book", async (done: any) => {
-
-            await chai
-                .request(app)
-                .post("/api/v1/books")
-                .send(testBook)
-
-            const res = await chai
-                .request(app)
-                .patch("/api/v1/books/1")
-                .send({ title: "The Light Fantastic" })
-            expect(res).to.have.status(200);
-            expect(res.body).to.be.an("object");
-            expect(res.body.book.title).to.be.equal("The Light Fantastic");
-            await chai
-                .request(app)
-                .delete("/api/v1/books/1")
-
-        })
-
+        const res = await chai.request(app).get("/api/v1/books");
+        expect(res.status).to.equal(200);
 
     });
-    // describe("GET /books/:id", () => {
-    //     it("should return one book", (done) => {
-    //         chai
-    //             .request(app)
-    //             .get("/books/1")
-    //             .end((err, res) => {
-    //                 expect(res).to.have.status(200);
-    //                 expect(res.body).to.be.an("object");
-    //                 expect(res.body.title).to.be.equal("The Colour of Magic");
-    //                 done();
-    //             });
-    //     });
-    // });
-    // describe("POST /books", () => {
-    //     it("should create a new book", (done) => {
-    //         chai
-    //             .request(app)
-    //             .post("/books")
-    //             .send({
-    //                 title: "The Light Fantastic",
-    //             })
-    //             .end((err, res) => {
-    //                 expect(res).to.have.status(201);
-    //                 expect(res.body).to.be.an("object");
-    //                 expect(res.body.title).to.be.equal("The Light Fantastic");
-    //                 done();
-    //             });
-    //     });
-    // });
+    it ("should create a new book", async () => {
+        const res = await chai.request(app).post("/api/v1/books").send(testBook);
+        expect(res.status).to.equal(201);
+    });
+    it ("should return a single book", async () => {
+        await chai.request(app).post("/api/v1/books").send(testBook);
+
+        const res = await chai.request(app).get("/api/v1/books/Test1");
+        expect(res.status).to.equal(200);
+    });
+    it ("should delete a book", async () => {
+        await chai.request(app).post("/api/v1/books").send(testBook);
+
+        const res = await chai.request(app).delete("/api/v1/books/Test1");
+        expect(res.status).to.equal(200);
+    });
+    it ("should update a book", async () => {
+        await chai.request(app).post("/api/v1/books").send(testBook);
+
+        const res = await chai.request(app).patch("/api/v1/books/Test1").send({title: "The Light Fantastic"});
+        expect(res.status).to.equal(200);
+    });
+    it ("should issue a book", async () => {
+        await chai.request(app).post("/api/v1/books").send(testBook);
+        await chai.request(app).post("/api/v1/students").send(testStudent);
+
+
+        const res = await chai.request(app).patch("/api/v1/books/Test1/issue").send({studentID: "Test2"});
+        // console.log(res.body);
+        expect(res.status).to.equal(200);
+    });
+});
+
+describe("Students", () => {
+    afterEach(async (done) => {
+        try {
+            await chai.request(app).delete("/api/v1/books/Test1");
+        } catch (err) {}
+        try {
+            await chai.request(app).delete("/api/v1/students/Test2");
+        } catch (err) {}
+        // done();
+    });
+    it ("should return all students", async () => {
+        await chai.request(app).post("/api/v1/students").send(testStudent);
+        const res = await chai.request(app).get("/api/v1/students");
+        expect(res.status).to.equal(200);
+    });
+    it ("should create a new student", async () => {
+        const res = await chai.request(app).post("/api/v1/students").send(testStudent);
+        expect(res.status).to.equal(201);
+    });
+    it ("should return a single student", async () => {
+        await chai.request(app).post("/api/v1/students").send(testStudent);
+        const res = await chai.request(app).get("/api/v1/students/Test2");
+        expect(res.status).to.equal(200);
+    });
+    it ("should delete a student", async () => {
+        await chai.request(app).post("/api/v1/students").send(testStudent);
+        const res = await chai.request(app).delete("/api/v1/students/Test2");
+        expect(res.status).to.equal(200);
+    });
+    it ("should update a student", async () => {
+        await chai.request(app).post("/api/v1/students").send(testStudent);
+        const res = await chai.request(app).patch("/api/v1/students/Test2").send({name: "Test User 2"});
+        expect(res.status).to.equal(200);
+    });
 });

@@ -78,7 +78,7 @@ export const issueBook: RequestHandler<{ code: string }, { message: string, book
     const { studentID } = req.body;
     try {
         const {data} = await axios.get(`${process.env.students_service}/api/v1/students/${studentID}`);
-        console.log(data);
+        // console.log(data);
         if (!data) throw new Error("Student not found");
         const sres = await axios.patch(`${process.env.books_service}/api/v1/books/${code}`, { issuedTo:data.data._id });
         const book = sres.data.data;
