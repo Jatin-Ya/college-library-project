@@ -2,8 +2,13 @@ import { Flex, Box, Button, Container, Text } from "@chakra-ui/react";
 import React from "react";
 import SearchInput from "./SearchInput";
 import Navigator from "./Navigator";
+import { View } from "../../types";
 
-const AppBar: React.FC = () => {
+type AppBarProps = {
+  view: View
+};
+
+const AppBar: React.FC<AppBarProps> = ({ view }) => {
   return (
     <>
       <Flex
@@ -28,9 +33,8 @@ const AppBar: React.FC = () => {
           Library Portal
         </Text>
         <SearchInput />
-        
-          <Navigator />
-        
+
+        <Navigator view={view} />
       </Flex>
     </>
   );

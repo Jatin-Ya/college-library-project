@@ -38,7 +38,13 @@ const BookListItem: React.FC<BookListItemProps> = ({ book, theme }) => {
             {book.title}
           </Text>
 
-          <Text w="20%" color="gray.700" isTruncated textAlign="center">
+          <Text
+            w="20%"
+            color="gray.700"
+            isTruncated
+            textAlign="center"
+            display={{ base: "none", md: "unset" }}
+          >
             {book.issuedTo === null ? "Available" : "Issued"}
           </Text>
         </Flex>

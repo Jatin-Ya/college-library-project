@@ -1,14 +1,25 @@
 import React from "react";
 import { FiArrowUpRight } from "react-icons/fi";
 import { IStudent } from "../../api/studentService";
-import { Flex, IconButton, Stack, Text } from "@chakra-ui/react";
-import Actions from "./Actions";
+import {
+  Button,
+  Flex,
+  HStack,
+  IconButton,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
+import { AiOutlineEdit } from "react-icons/ai";
+import DeleteBookButton from "../DeleteButton/DeleteBookButton";
+import { bookState } from "../../atoms/bookState";
+import { IBook } from "../../api/bookService";
+import EditBookButton from "../EditButton/EditBookButton";
 
 type RightContentProps = {
-  student: IStudent | null;
+  book: IBook;
 };
 
-const RightContent: React.FC<RightContentProps> = ({ student }) => {
+const RightContent: React.FC<RightContentProps> = ({ book }) => {
   return (
     <Flex flex="1" flexDir="column">
       <Flex m="20px" align="center" justify="space-between">
@@ -17,12 +28,16 @@ const RightContent: React.FC<RightContentProps> = ({ student }) => {
             Status:
           </Text>
           <Text variant="content-head.500">
-            {!student ? "Available" : "Issued"}
+            {!book.issuedTo ? "Available" : "Issued"}
           </Text>
         </Flex>
-        <Actions />
+        <HStack spacing="1px">
+          <EditBookButton book={book} />
+
+          <DeleteBookButton book={book} />
+        </HStack>
       </Flex>
-      {student && (
+      {book.issuedTo && (
         <Flex flex="1" p="20px" flexDir="column">
           <Flex align="center" justify="space-between">
             <Text variant="content-head.300">Issued To:</Text>
@@ -43,16 +58,16 @@ const RightContent: React.FC<RightContentProps> = ({ student }) => {
             spacing="5px"
           >
             <Flex flexDir="row">
-              <Text variant="content-head.500">{student?.name}</Text>
+              <Text variant="content-head.500">{book.issuedTo.name}</Text>
               <Text variant="content-head.500" color="gray.500" ml="10px">
                 {"#"}
-                {student?.id.toUpperCase()}
+                {book.issuedTo.id.toUpperCase()}
               </Text>
             </Flex>
-            <Text variant="content-head.300">{student?.email}</Text>
+            <Text variant="content-head.300">{book.issuedTo.email}</Text>
             <Text variant="content-head.300">
               {"Contact No.:  "}
-              {student?.phoneNumber}
+              {book.issuedTo.phoneNumber}
             </Text>
           </Stack>
         </Flex>

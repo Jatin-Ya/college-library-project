@@ -23,7 +23,7 @@ const Book: React.FC<BookProps> = ({ book, isVisible }) => {
         <Text variant="content-base">{book.description}</Text>
       </Stack>
       <Divider orientation="vertical" />
-      <RightContent student={book?.issuedTo} />
+      <RightContent book={book} />
     </Flex>
   );
 };

@@ -4,20 +4,28 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import BooksView from "./views/BooksView";
 import { ChakraProvider } from "@chakra-ui/react";
 import { theme } from "./chakra/theme";
+import { RecoilRoot } from "recoil";
+import StudentsView from "./views/StudentsView";
 
 const router = createBrowserRouter([
   {
     path: "/books",
     element: <BooksView />,
   },
+  {
+    path: "/students",
+    element: <StudentsView />,
+  },
 ]);
 
 function App() {
   return (
-    <ChakraProvider theme={theme}>
-      <AppBar />
-      <RouterProvider router={router} />
-    </ChakraProvider>
+    <RecoilRoot>
+      <ChakraProvider theme={theme}>
+        
+        <RouterProvider router={router} />
+      </ChakraProvider>
+    </RecoilRoot>
   );
 }
 

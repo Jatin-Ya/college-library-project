@@ -8,6 +8,18 @@ export interface IBook {
   issuedTo: IStudent | null;
 }
 
+export const AddBook = async (book: IBook) => {
+  console.log(book);
+};
+
+export const deleteBook = async (book: IBook) => {
+  console.log(book);
+};
+
+export const updateBook = async (oldBook: IBook, newBook: IBook) => {
+  console.log(newBook);
+};
+
 export const dummyBooks: IBook[] = [
   {
     code: "abcdefgh",

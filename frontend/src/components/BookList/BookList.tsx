@@ -10,11 +10,11 @@ import React from "react";
 import { IBook } from "../../api/bookService";
 import BookListItem from "./BookListItem";
 import Header from "./Header";
+import { useRecoilValue } from "recoil";
+import { bookState } from "../../atoms/bookState";
 
-type BookListProps = {
-  books: IBook[];
-};
-const BookList: React.FC<BookListProps> = ({ books }) => {
+const BookList: React.FC = () => {
+  const books = useRecoilValue<IBook[]>(bookState);
   return (
     <Flex maxW="1080px" w="100%" align="center" flexDir="column">
       <Header />
@@ -25,9 +25,14 @@ const BookList: React.FC<BookListProps> = ({ books }) => {
         mt="60px"
         w="100%"
       >
-        {books.map((book, index) => (
-          <BookListItem book={book} theme={index & 1 ? "dark" : "light"} />
-        ))}
+        {books &&
+          books.map((book, index) => (
+            <BookListItem
+              book={book}
+              theme={index & 1 ? "dark" : "light"}
+              key={book.code}
+            />
+          ))}
       </Stack>
     </Flex>
   );

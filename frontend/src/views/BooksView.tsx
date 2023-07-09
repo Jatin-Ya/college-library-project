@@ -1,12 +1,17 @@
 import { Flex } from "@chakra-ui/react";
 import React from "react";
 import BookList from "../components/BookList/BookList";
-import { dummyBooks } from "../api/bookService";
+import { IBook, dummyBooks } from "../api/bookService";
 import BookListItem from "../components/BookList/BookListItem";
+import AddBookButton from "../components/AddButton/AddBookButton";
+import { bookState } from "../atoms/bookState";
+import { useRecoilValue } from "recoil";
+import AppBar from "../components/Appbar/Appbar";
 
 const BooksView: React.FC = () => {
   return (
     <Flex
+      overflow="auto"
       bgColor="gray.100"
       flex="1"
       h="100%"
@@ -15,7 +20,10 @@ const BooksView: React.FC = () => {
       pt="80px"
       align="center"
     >
-      <BookList books={dummyBooks} />
+      <AppBar view="books" />
+      <BookList />
+      <AddBookButton />
+      <Flex h="250px">Footer</Flex>
     </Flex>
   );
 };

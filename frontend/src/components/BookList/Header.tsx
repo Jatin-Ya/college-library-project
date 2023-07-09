@@ -23,7 +23,13 @@ const Header: React.FC = () => {
         <Text w="30%" textAlign="center" fontWeight="600" color="primary.900">
           Title
         </Text>
-        <Text w="20%" textAlign="center" fontWeight="600" color="primary.900">
+        <Text
+          w="20%"
+          textAlign="center"
+          fontWeight="600"
+          color="primary.900"
+          display={{ base: "none", md: "unset" }}
+        >
           Status
         </Text>
       </Flex>
