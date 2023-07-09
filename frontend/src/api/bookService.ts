@@ -15,7 +15,13 @@ export const dummyBooks: IBook[] = [
     author: "Harper Lee",
     description:
       "A classic novel set in the American South. It explores themes of racial injustice and moral development through the eyes of the young protagonist, Scout Finch.",
-    issuedTo: null,
+    issuedTo: {
+      id: "fe435g",
+      name: "Indrayudh Ghosh",
+      email: "indrayudhghosh2003@gmail.com",
+      phoneNumber: "2645395876",
+      books: [],
+    },
   },
   {
     code: "ijklmnop",

@@ -28,9 +28,9 @@ const AppBar: React.FC = () => {
           Library Portal
         </Text>
         <SearchInput />
-        <Flex w="240px" justify="center">
+        
           <Navigator />
-        </Flex>
+        
       </Flex>
     </>
   );
