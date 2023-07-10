@@ -6,6 +6,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { theme } from "./chakra/theme";
 import { RecoilRoot } from "recoil";
 import StudentsView from "./views/StudentsView";
+import { fetchBooks } from "./api/bookService";
 
 const router = createBrowserRouter([
   {
@@ -22,7 +23,6 @@ function App() {
   return (
     <RecoilRoot>
       <ChakraProvider theme={theme}>
-        
         <RouterProvider router={router} />
       </ChakraProvider>
     </RecoilRoot>

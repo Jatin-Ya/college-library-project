@@ -1,6 +1,8 @@
 import { Flex } from "@chakra-ui/react";
 import React from "react";
 import AppBar from "../components/Appbar/Appbar";
+import StudentList from "../components/StudentList/StudentList";
+import AddStudentButton from "../components/AddButton/AddStudentButton";
 
 const StudentsView: React.FC = () => {
   return (
@@ -15,6 +17,8 @@ const StudentsView: React.FC = () => {
       align="center"
     >
       <AppBar view="students" />
+      <StudentList />
+      <AddStudentButton />
       <Flex h="250px">Footer</Flex>
     </Flex>
   );

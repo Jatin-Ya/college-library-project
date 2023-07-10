@@ -13,22 +13,24 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { MdOutlineDelete } from "react-icons/md";
-import { IBook, deleteBook } from "../../api/bookService";
-import { bookState } from "../../atoms/bookState";
 import { useSetRecoilState } from "recoil";
+import { IStudent, deleteStudent } from "../../api/studentService";
+import { studentState } from "../../atoms/studentState";
 
-type DeleteBookProps = {
-  book: IBook;
+type DeleteStudentProps = {
+  student: IStudent;
 };
 
-const DeleteBookButton: React.FC<DeleteBookProps> = ({ book }) => {
+const DeleteStudentButton: React.FC<DeleteStudentProps> = ({ student }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isLoading, setLoading] = useState<boolean>(false);
-  const updateBooks = useSetRecoilState(bookState);
+  const updateStudents = useSetRecoilState(studentState);
   const handleConfirm = async () => {
     setLoading(true);
-    if (await deleteBook(book))
-      updateBooks((books) => books.filter((_book) => _book.code !== book.code));
+    if (await deleteStudent(student))
+      updateStudents((students) =>
+        students.filter((_student) => _student.studentID !== student.studentID)
+      );
     onClose();
     setLoading(false);
   };
@@ -41,16 +43,16 @@ const DeleteBookButton: React.FC<DeleteBookProps> = ({ book }) => {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Delete Book</ModalHeader>
+          <ModalHeader>Delete Student</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             Are you sure you want to delete{' "'}
             <Text as="span" fontWeight="500">
-              {book.title}
+              {student.name}
             </Text>
             {'" '}
-            from the library? This action will also remove the book from any
-            student who issued it.
+            from the library? This action will also remove all books from the
+            student's issued list.
           </ModalBody>
 
           <ModalFooter>
@@ -78,4 +80,4 @@ const DeleteBookButton: React.FC<DeleteBookProps> = ({ book }) => {
   );
 };
 
-export default DeleteBookButton;
+export default DeleteStudentButton;

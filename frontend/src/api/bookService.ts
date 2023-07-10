@@ -1,3 +1,4 @@
+import axios from "axios";
 import { IStudent } from "./studentService";
 
 export interface IBook {
@@ -8,16 +9,65 @@ export interface IBook {
   issuedTo: IStudent | null;
 }
 
-export const AddBook = async (book: IBook) => {
-  console.log(book);
+type FetchBooksResponse = {
+  books: IBook[];
+};
+type AddBookResponse = {
+  book?: IBook;
+  message: string;
+};
+
+type DeleteBookResponse = {
+  message: string;
+};
+type UpdateBookResponse = {
+  data?: IBook;
+  message: string;
+};
+
+const apiURL = "https://college-library-api.onrender.com/api/v1/books";
+
+export const fetchBooks = async () => {
+  console.log("books data loaded");
+  try {
+    const { data } = await axios.get<FetchBooksResponse>(apiURL);
+    const books = data.books;
+    console.log(books);
+    return books;
+  } catch (err) {
+    console.log("failed to fetch books from api");
+  }
+};
+
+export const addBook = async (book: IBook) => {
+  try {
+    const { data } = await axios.post<AddBookResponse>(apiURL, book);
+    if (data.book) return data.book;
+    else console.log("failed to add book");
+  } catch (err) {
+    console.log("failed to add book");
+  }
 };
 
 export const deleteBook = async (book: IBook) => {
-  console.log(book);
+  const deleteURL = apiURL + "/" + book.code;
+  try {
+    const { data } = await axios.delete<DeleteBookResponse>(deleteURL);
+    if (data.message === "Book deleted successfully") return true;
+  } catch (err) {
+    console.log("failed to call api");
+  }
+  return false;
 };
 
-export const updateBook = async (oldBook: IBook, newBook: IBook) => {
-  console.log(newBook);
+export const updateBook = async (book: IBook) => {
+  const updateURL = apiURL + "/" + book.code;
+  try {
+    const { data } = await axios.patch<UpdateBookResponse>(updateURL, book);
+    if (data.message === "Book updated successfully") return data.data;
+  } catch (err) {
+    console.log("failed to call api");
+  }
 };
 
 export const dummyBooks: IBook[] = [
@@ -28,10 +78,10 @@ export const dummyBooks: IBook[] = [
     description:
       "A classic novel set in the American South. It explores themes of racial injustice and moral development through the eyes of the young protagonist, Scout Finch.",
     issuedTo: {
-      id: "fe435g",
+      studentID: "fe435g",
       name: "Indrayudh Ghosh",
       email: "indrayudhghosh2003@gmail.com",
-      phoneNumber: "2645395876",
+      phone: "2645395876",
       books: [],
     },
   },

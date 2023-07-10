@@ -61,13 +61,13 @@ const RightContent: React.FC<RightContentProps> = ({ book }) => {
               <Text variant="content-head.500">{book.issuedTo.name}</Text>
               <Text variant="content-head.500" color="gray.500" ml="10px">
                 {"#"}
-                {book.issuedTo.id.toUpperCase()}
+                {book.issuedTo.studentID.toUpperCase()}
               </Text>
             </Flex>
             <Text variant="content-head.300">{book.issuedTo.email}</Text>
             <Text variant="content-head.300">
               {"Contact No.:  "}
-              {book.issuedTo.phoneNumber}
+              {book.issuedTo.phone}
             </Text>
           </Stack>
         </Flex>

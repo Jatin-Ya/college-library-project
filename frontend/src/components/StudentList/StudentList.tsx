@@ -7,18 +7,18 @@ import {
   Text,
 } from "@chakra-ui/react";
 import React, { useEffect } from "react";
-import { IBook, fetchBooks } from "../../api/bookService";
-import BookListItem from "./BookListItem";
 import Header from "./Header";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { bookState } from "../../atoms/bookState";
+import { IStudent, fetchStudents } from "../../api/studentService";
+import { studentState } from "../../atoms/studentState";
+import StudentListItem from "./StudentListItem";
 
-const BookList: React.FC = () => {
-  const [books, setBooks] = useRecoilState<IBook[]>(bookState);
+const StudentList: React.FC = () => {
+  const [students, setStudents] = useRecoilState<IStudent[]>(studentState);
   useEffect(() => {
     const load = async () => {
-      const books = await fetchBooks();
-      if (books) setBooks(books);
+      const students = await fetchStudents();
+      if (students) setStudents(students);
     };
     load();
   }, []);
@@ -32,12 +32,12 @@ const BookList: React.FC = () => {
         mt="60px"
         w="100%"
       >
-        {books &&
-          books.map((book, index) => (
-            <BookListItem
-              book={book}
+        {students &&
+          students.map((student, index) => (
+            <StudentListItem
+              student={student}
               theme={index & 1 ? "dark" : "light"}
-              key={book.code}
+              key={student.studentID}
             />
           ))}
       </Stack>
@@ -45,4 +45,4 @@ const BookList: React.FC = () => {
   );
 };
 
-export default BookList;
+export default StudentList;

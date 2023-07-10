@@ -2,7 +2,6 @@ import {
   Button,
   Flex,
   Input,
-  InputGroup,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -17,46 +16,44 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
-import { addBook, IBook } from "../../api/bookService";
 import { useSetRecoilState } from "recoil";
-import { bookState } from "../../atoms/bookState";
+import { IStudent, addStudent } from "../../api/studentService";
+import { studentState } from "../../atoms/studentState";
 
-const initialInput: IBook = {
-  code: "",
-  title: "",
-  author: "",
-  description: "",
-  issuedTo: null,
+const initialInput: IStudent = {
+  studentID: "",
+  name: "",
+  email: "",
+  phone: "",
+  books: [],
 };
 
-const AddBookButton: React.FC = () => {
+const AddStudentButton: React.FC = () => {
   const [isOpen, setOpen] = useState<boolean>(false);
   const [isLoading, setLoading] = useState<boolean>(false);
-  const [bookInput, setBookInput] = useState<IBook>(initialInput);
-  const updateBooks = useSetRecoilState(bookState);
+  const [studentInput, setStudentInput] = useState<IStudent>(initialInput);
+  const updateStudents = useSetRecoilState(studentState);
   const onOpen = () => setOpen(true);
   const onClose = () => setOpen(false);
-  const updateCode: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-    setBookInput({ ...bookInput, code: e.target.value });
+  const updateStudentID: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    setStudentInput({ ...studentInput, studentID: e.target.value });
   };
-  const updateTitle: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-    setBookInput({ ...bookInput, title: e.target.value });
+  const updateName: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    setStudentInput({ ...studentInput, name: e.target.value });
   };
-  const updateDescription: React.ChangeEventHandler<HTMLTextAreaElement> = (
-    e
-  ) => {
-    setBookInput({ ...bookInput, description: e.target.value });
+  const updateEmail: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    setStudentInput({ ...studentInput, email: e.target.value });
   };
-  const updateAuthor: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-    setBookInput({ ...bookInput, author: e.target.value });
+  const updatePhone: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    setStudentInput({ ...studentInput, phone: e.target.value });
   };
   const handleConfirm = async () => {
     setLoading(true);
     try {
-      const newBook = await addBook(bookInput);
-      if (newBook)
-        updateBooks((books) => {
-          return [...books, newBook];
+      const newStudent = await addStudent(studentInput);
+      if (newStudent)
+        updateStudents((students) => {
+          return [...students, newStudent];
         });
       setOpen(false);
     } catch (err) {
@@ -92,45 +89,42 @@ const AddBookButton: React.FC = () => {
       >
         <ModalOverlay />
         <ModalContent ml="10px" mr="10px">
-          <ModalHeader>Add New Book</ModalHeader>
+          <ModalHeader>Add New Student</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Stack spacing="20px">
               <Flex flexDir="column" m="0px 20px">
-                <Text color="gray.500">Code No.</Text>
+                <Text color="gray.500">Student ID</Text>
                 <Input
                   placeholder="e.g. AB69F3"
-                  value={bookInput.code}
-                  onChange={updateCode}
+                  value={studentInput.studentID}
+                  onChange={updateStudentID}
                 />
               </Flex>
 
               <Flex flexDir="column" m="0px 20px">
-                <Text color="gray.500">Title</Text>
+                <Text color="gray.500">Name</Text>
                 <Input
-                  placeholder="e.g. A Song of Ice and Fire"
-                  value={bookInput.title}
-                  onChange={updateTitle}
+                  placeholder="e.g. John Doe"
+                  value={studentInput.name}
+                  onChange={updateName}
                 />
               </Flex>
 
               <Flex flexDir="column" m="0px 20px">
-                <Text color="gray.500">Author</Text>
+                <Text color="gray.500">Email</Text>
                 <Input
-                  placeholder="e.g. George R.R. Martin"
-                  value={bookInput.author}
-                  onChange={updateAuthor}
+                  placeholder="e.g. abcxyz@gmail.com"
+                  value={studentInput.email}
+                  onChange={updateEmail}
                 />
               </Flex>
-
               <Flex flexDir="column" m="0px 20px">
-                <Text color="gray.500">Description</Text>
-                <Textarea
-                  placeholder={
-                    '"A Song of Ice and Fire" is a gripping fantasy series by George R.R. Martin. Set in Westeros and Essos, it follows noble houses vying for the Iron Throne amidst political intrigue and supernatural threats. With complex characters, unpredictable plot twists, and gritty realism, it has gained a massive following and inspired the TV series "Game of Thrones".'
-                  }
-                  value={bookInput.description}
-                  onChange={updateDescription}
+                <Text color="gray.500">Contact No.</Text>
+                <Input
+                  placeholder="e.g. 9182736455"
+                  value={studentInput.phone}
+                  onChange={updatePhone}
                 />
               </Flex>
             </Stack>
@@ -145,10 +139,10 @@ const AddBookButton: React.FC = () => {
               onClick={handleConfirm}
               isDisabled={
                 isLoading ||
-                bookInput.code === "" ||
-                bookInput.title === "" ||
-                bookInput.description === "" ||
-                bookInput.author === ""
+                studentInput.studentID === "" ||
+                studentInput.name === "" ||
+                studentInput.email === "" ||
+                studentInput.phone === ""
               }
             >
               {isLoading && <Spinner size="sm" mr="8px" />}
@@ -161,4 +155,4 @@ const AddBookButton: React.FC = () => {
   );
 };
 
-export default AddBookButton;
+export default AddStudentButton;

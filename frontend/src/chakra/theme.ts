@@ -12,6 +12,12 @@ export const theme = extendTheme({
           fontWeight: "400",
           fontSize: "14pt",
         },
+        "content-base.500": {
+          maxW: "60ch",
+          color: "gray.600",
+          fontWeight: "400",
+          fontSize: "18pt",
+        },
         "content-head.700": {
           fontSize: "24pt",
           fontWeight: "600",

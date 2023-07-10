@@ -16,8 +16,8 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
-import { AiOutlineEdit, AiOutlinePlus } from "react-icons/ai";
-import { AddBook, IBook, updateBook } from "../../api/bookService";
+import { AiOutlineEdit } from "react-icons/ai";
+import { IBook, updateBook } from "../../api/bookService";
 import { useSetRecoilState } from "recoil";
 import { bookState } from "../../atoms/bookState";
 
@@ -49,7 +49,7 @@ const EditBookButton: React.FC<EditBookButtonProps> = ({ book }) => {
   const handleConfirm = async () => {
     setLoading(true);
     try {
-      await updateBook(book, bookInput);
+      await updateBook(bookInput);
       updateBooks((books) => {
         return books.map((_book) =>
           _book.code === book.code ? bookInput : _book
