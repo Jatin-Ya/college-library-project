@@ -12,13 +12,30 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { IStudent, fetchStudents } from "../../api/studentService";
 import { studentState } from "../../atoms/studentState";
 import StudentListItem from "./StudentListItem";
+import { IBook, fetchBooks } from "../../api/bookService";
+import { bookState } from "../../atoms/bookState";
 
-const StudentList: React.FC = () => {
+type StudentListProps = {
+  searchFilter: string;
+};
+
+const StudentList: React.FC<StudentListProps> = ({ searchFilter }) => {
   const [students, setStudents] = useRecoilState<IStudent[]>(studentState);
+  const [books, setBooks] = useRecoilState<IBook[]>(bookState);
+  const filterStudents = (student: IStudent) => {
+    return (
+      student.studentID.toLowerCase().startsWith(searchFilter) ||
+      student.name.toLowerCase().startsWith(searchFilter) ||
+      student.email.toLowerCase().startsWith(searchFilter) ||
+      student.phone.toLowerCase().startsWith(searchFilter)
+    );
+  };
   useEffect(() => {
     const load = async () => {
-      const students = await fetchStudents();
-      if (students) setStudents(students);
+      const studentData = await fetchStudents();
+      const bookData = await fetchBooks();
+      if (studentData) setStudents(studentData);
+      if (bookData) setBooks(bookData);
     };
     load();
   }, []);
@@ -33,13 +50,15 @@ const StudentList: React.FC = () => {
         w="100%"
       >
         {students &&
-          students.map((student, index) => (
-            <StudentListItem
-              student={student}
-              theme={index & 1 ? "dark" : "light"}
-              key={student.studentID}
-            />
-          ))}
+          students
+            .filter(filterStudents)
+            .map((student, index) => (
+              <StudentListItem
+                student={student}
+                theme={index & 1 ? "dark" : "light"}
+                key={student.studentID}
+              />
+            ))}
       </Stack>
     </Flex>
   );

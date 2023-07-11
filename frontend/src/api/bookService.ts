@@ -16,12 +16,19 @@ type AddBookResponse = {
   book?: IBook;
   message: string;
 };
-
 type DeleteBookResponse = {
   message: string;
 };
 type UpdateBookResponse = {
   data?: IBook;
+  message: string;
+};
+type ReturnBookResponse = {
+  book?: IBook;
+  message: string;
+};
+type IssueBookResponse = {
+  book?: IBook;
   message: string;
 };
 
@@ -68,6 +75,30 @@ export const updateBook = async (book: IBook) => {
   } catch (err) {
     console.log("failed to call api");
   }
+};
+
+export const returnBook = async (book: IBook) => {
+  const returnURL = apiURL + "/" + book.code + "/return";
+  try {
+    const { data } = await axios.patch<ReturnBookResponse>(returnURL);
+    if (data.message === "Book returned successfully") return true;
+  } catch (err) {
+    console.log("failed to call api");
+  }
+  return false;
+};
+
+export const issueBook = async (book: IBook, student: IStudent) => {
+  const issueURL = apiURL + "/" + book.code + "/issue";
+  try {
+    const { data } = await axios.patch<IssueBookResponse>(issueURL, {
+      studentID: student.studentID,
+    });
+    if (data.message === "Book issued successfully") return true;
+  } catch (err) {
+    console.log("failed to call api");
+  }
+  return false;
 };
 
 export const dummyBooks: IBook[] = [

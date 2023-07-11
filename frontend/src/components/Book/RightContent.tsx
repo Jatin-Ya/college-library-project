@@ -14,6 +14,8 @@ import DeleteBookButton from "../DeleteButton/DeleteBookButton";
 import { bookState } from "../../atoms/bookState";
 import { IBook } from "../../api/bookService";
 import EditBookButton from "../EditButton/EditBookButton";
+import ReturnBookButton from "./ReturnBookButton";
+import IssueBookButton from "./IssueBookButton";
 
 type RightContentProps = {
   book: IBook;
@@ -21,9 +23,15 @@ type RightContentProps = {
 
 const RightContent: React.FC<RightContentProps> = ({ book }) => {
   return (
-    <Flex flex="1" flexDir="column">
+    <Flex
+      flex="1"
+      flexDir="column"
+      justify="space-between"
+      maxW={{ md: "unset", lg: "500px" }}
+      minW="300px"
+    >
       <Flex m="20px" align="center" justify="space-between">
-        <Flex>
+        <Flex pr="8px">
           <Text variant="content-head.500" pr="15px">
             Status:
           </Text>
@@ -38,7 +46,7 @@ const RightContent: React.FC<RightContentProps> = ({ book }) => {
         </HStack>
       </Flex>
       {book.issuedTo && (
-        <Flex flex="1" p="20px" flexDir="column">
+        <Flex flex="1" p="20px" flexDir="column" pt="0px">
           <Flex align="center" justify="space-between">
             <Text variant="content-head.300">Issued To:</Text>
             <IconButton
@@ -70,6 +78,14 @@ const RightContent: React.FC<RightContentProps> = ({ book }) => {
               {book.issuedTo.phone}
             </Text>
           </Stack>
+          <Flex justify="flex-end">
+            <ReturnBookButton book={book} />
+          </Flex>
+        </Flex>
+      )}
+      {!book.issuedTo && (
+        <Flex justify="flex-end" p="20px">
+          <IssueBookButton book={book} />
         </Flex>
       )}
     </Flex>

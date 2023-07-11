@@ -2,7 +2,15 @@ import { Flex, Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
 import React from "react";
 import { BiSearch } from "react-icons/bi";
 
-const SearchInput: React.FC = () => {
+type SearchInputProps = {
+  searchFilter: string;
+  setSearchFilter: React.Dispatch<React.SetStateAction<string>>;
+};
+
+const SearchInput: React.FC<SearchInputProps> = ({
+  searchFilter,
+  setSearchFilter,
+}) => {
   return (
     <Flex flexGrow={1} m="0px 20px" maxWidth={{ lg: "650px" }} align="center">
       <InputGroup colorScheme="white">
@@ -16,6 +24,8 @@ const SearchInput: React.FC = () => {
           type="text"
           placeholder={"Search"}
           bgColor="gray.200"
+          value={searchFilter}
+          onChange={(e) => setSearchFilter(e.target.value.toLowerCase())}
         />
       </InputGroup>
     </Flex>

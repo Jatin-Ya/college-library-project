@@ -3,12 +3,19 @@ import React from "react";
 import SearchInput from "./SearchInput";
 import Navigator from "./Navigator";
 import { View } from "../../types";
+import NavButton from "./NavButton";
 
 type AppBarProps = {
-  view: View
+  view: View;
+  searchFilter: string;
+  setSearchFilter: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const AppBar: React.FC<AppBarProps> = ({ view }) => {
+const AppBar: React.FC<AppBarProps> = ({
+  view,
+  searchFilter,
+  setSearchFilter,
+}) => {
   return (
     <>
       <Flex
@@ -32,8 +39,11 @@ const AppBar: React.FC<AppBarProps> = ({ view }) => {
         >
           Library Portal
         </Text>
-        <SearchInput />
-
+        <SearchInput
+          searchFilter={searchFilter}
+          setSearchFilter={setSearchFilter}
+        />
+        <NavButton view={view} />
         <Navigator view={view} />
       </Flex>
     </>

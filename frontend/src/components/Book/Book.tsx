@@ -16,7 +16,8 @@ const Book: React.FC<BookProps> = ({ book, isVisible }) => {
       minH="300px"
       bgColor="primary.200"
       m="10px 0px"
-      flexDir={{ base: "column", md: "row" }}
+      justify="space-between"
+      flexDir={{ base: "column", md: "column", lg: "row" }}
     >
       <Stack flexDir="column" p="20px" align="flex-start">
         <Text variant="content-head.700">{book.title}</Text>

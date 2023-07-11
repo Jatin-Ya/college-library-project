@@ -12,13 +12,29 @@ import BookListItem from "./BookListItem";
 import Header from "./Header";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { bookState } from "../../atoms/bookState";
+import { IStudent, fetchStudents } from "../../api/studentService";
+import { studentState } from "../../atoms/studentState";
 
-const BookList: React.FC = () => {
+type BookListProps = {
+  searchFilter: string;
+};
+
+const BookList: React.FC<BookListProps> = ({ searchFilter }) => {
+  const [students, setStudents] = useRecoilState<IStudent[]>(studentState);
   const [books, setBooks] = useRecoilState<IBook[]>(bookState);
+  const filterBooks = (book: IBook) => {
+    return (
+      book.code.toLowerCase().startsWith(searchFilter) ||
+      book.title.toLowerCase().startsWith(searchFilter) ||
+      book.author.toLowerCase().startsWith(searchFilter)
+    );
+  };
   useEffect(() => {
     const load = async () => {
-      const books = await fetchBooks();
-      if (books) setBooks(books);
+      const studentData = await fetchStudents();
+      const bookData = await fetchBooks();
+      if (studentData) setStudents(studentData);
+      if (bookData) setBooks(bookData);
     };
     load();
   }, []);
@@ -33,13 +49,15 @@ const BookList: React.FC = () => {
         w="100%"
       >
         {books &&
-          books.map((book, index) => (
-            <BookListItem
-              book={book}
-              theme={index & 1 ? "dark" : "light"}
-              key={book.code}
-            />
-          ))}
+          books
+            .filter(filterBooks)
+            .map((book, index) => (
+              <BookListItem
+                book={book}
+                theme={index & 1 ? "dark" : "light"}
+                key={book.code}
+              />
+            ))}
       </Stack>
     </Flex>
   );
