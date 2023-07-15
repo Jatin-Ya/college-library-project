@@ -67,7 +67,74 @@ The backend api is constructed using Node and Express in typescript. It follows 
 * Homepage
 
 <p align="center">
-    <img src="./images/students page/home.png" width="70%"/>
+    <img src="./images/students page/home.png" width="80%"/>
+</p>
+
+* Add student
+
+<p align="center">
+    <img src="./images/students page/add student.png" width="80%"/>
+</p>
+
+* View Student Details
+
+<p align="center">
+    <img src="./images/students page/student details.png" width="80%"/>
+</p>
+
+* Edit student Details
+
+<p align="center">
+    <img src="./images/students page/edit student.png" width="80%"/>
+</p>
+
+* Delete Student
+
+<p align="center">
+    <img src="./images/students page/delete student.png" width="80%"/>
+</p>
+
+* Issue Book
+
+<p align="center">
+    <img src="./images/students page/issue book.png" width="80%"/>
+</p>
+
+**Books Page**
+* Homepage
+
+<p align="center">
+    <img src="./images/books page/home.png" width="80%"/>
+</p>
+
+* Add Book
+
+<p align="center">
+    <img src="./images/students page/add book.png" width="80%"/>
+</p>
+
+* Book Details
+
+<p align="center">
+    <img src="./images/books page/book details.png" width="80%"/>
+</p>
+
+* Edit Book Details
+
+<p align="center">
+    <img src="./images/books page/edit book.png" width="80%"/>
+</p>
+
+* Delete Book
+
+<p align="center">
+    <img src="./images/books page/delete book.png" width="80%"/>
+</p>
+
+* Issue Book
+
+<p align="center">
+    <img src="./images/books page/issue book.png" width="80%"/>
 </p>
 
 # Team
