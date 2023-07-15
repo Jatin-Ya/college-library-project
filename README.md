@@ -5,18 +5,18 @@ This project was developed by a taem during the AFourathon 3.0 Hackathon, by AFO
 
 # Problem Statement
 
-## Project B: College Library Project:
+**Project B: College Library Project:**
 
 College Library Project is broken up as 3 problem statements. You can implement as many working solutions for problem statements as you can. You can use same or different tech stack/languages for coding each problem statement.
 
-Problem Statement 1 - Student Details App
+**Problem Statement 1 -** Student Details App
 Build an application that can be run as a container on the cloud for creating/updating/deleting a student. The functionality of the application is:
 
 * Allow user to add, update, delete a student
 Each student should have: Student Name, Student ID Number, Student Email, Student Phone Number
 * Persist all student details in the database
 
-Problem Statement 2 - Books App
+**Problem Statement 2 -** Books App
 Build an application that can be run as a container on the cloud for creating/updating/deleting a library book. The functionality of the application is:
 
 * Allow user to add, update, delete a book
