@@ -67,7 +67,7 @@ The backend api is constructed using Node and Express in typescript. It follows 
 * Homepage
 
 <p align="center">
-    <img src="./images/students page/home.png" height="40%" width="30%"/>
+    <img src="./images/students page/home.png" width="70%"/>
 </p>
 
 # Team
