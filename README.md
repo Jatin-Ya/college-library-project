@@ -50,6 +50,8 @@ The backend api is constructed using Node and Express in typescript. It follows 
 * Adding a new student
 * Deleting a student
 * Updating a student's details
+* Issue a book to a selected student
+* Return a issued book by a student
 * Get the details of books issued to every student
 * Search student via search bar
 
@@ -58,6 +60,8 @@ The backend api is constructed using Node and Express in typescript. It follows 
 * Deleting a book
 * Updating a book's details
 * Get the status of the books
+* Issue the selected book to a student
+* Return the selected book if issued
 * Get the details of the student to whom the book is issued to
 * Search book via search bar
 
