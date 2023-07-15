@@ -61,6 +61,15 @@ The backend api is constructed using Node and Express in typescript. It follows 
 * Get the details of the student to whom the book is issued to
 * Search book via search bar
 
+# Functionality Overview
+
+**Students Page**
+* Homepage
+
+<p align="center">
+    <img src="./images/students page/home.png" height="40%" width="30%"/>
+</p>
+
 # Team
 The team behind the app consists of the following members:
 
