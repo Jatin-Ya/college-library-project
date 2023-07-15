@@ -110,7 +110,7 @@ The backend api is constructed using Node and Express in typescript. It follows 
 * Add Book
 
 <p align="center">
-    <img src="./images/students page/add book.png" width="80%"/>
+    <img src="./images/books page/add book.png" width="80%"/>
 </p>
 
 * Book Details
