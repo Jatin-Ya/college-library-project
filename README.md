@@ -61,3 +61,9 @@ The backend api is constructed using Node and Express in typescript. It follows 
 * Get the details of the student to whom the book is issued to
 * Search book via search bar
 
+# Team
+The team behind the app consists of the following members:
+
+* Jatin Yadav
+* Tushar Joshi
+* Indrayudh Ghosh
