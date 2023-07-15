@@ -32,7 +32,7 @@ type IssueBookResponse = {
   message: string;
 };
 
-const apiURL = "https://college-library-api.onrender.com/api/v1/books";
+const apiURL = "https://library-project-api.onrender.com/api/v1/books";
 
 export const fetchBooks = async () => {
   console.log("books data loaded");
