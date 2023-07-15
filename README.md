@@ -38,6 +38,7 @@ The College Library Management System app utilizes the following technologies:
 * Express: Fast node network app framework
 * MongoDB: NoSQL database
 * React: Typescript library for building web interfaces
+* Docker: A set of platform as a service products that delivers software in packages called containers
 * ChakraUI: A react component library
 * Recoil: A state management library for React
 
