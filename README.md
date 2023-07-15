@@ -47,6 +47,16 @@ The College Library Management System app utilizes the following technologies:
 # Backend Architecture
 The backend api is constructed using Node and Express in typescript. It follows microservice architecture. It consists of two fine-grained services, books service and students service, and another backend service to intigrate all the microservices. Books services handles all the logic for handling books related api calls. Students services handles all the logic for handling Students related api calls. Both the services are connected to the same mongo database which contains the data documents with refrences for records related to issuing books.
 
+<p align="center">
+    <img src="./images/architecture.jpeg" width="80%"/>
+</p>
+
+**Database Document Models**
+
+<p align="center">
+    <img src="./images/models.jpeg" width="80%"/>
+</p>
+
 # Features
 
 **Features for Students Page**
