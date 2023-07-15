@@ -20,6 +20,8 @@ app.use(express.static("./build"));
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "./build/index.html"));
 });
+app.get("/books", (req, res) => res.redirect("/"));
+app.get("/students", (req, res) => res.redirect("/"));
 app.use("/api/v1/books/", booksRouter);
 app.use("/api/v1/students/", studentsRouter);
 
