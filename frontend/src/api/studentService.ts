@@ -27,7 +27,7 @@ type UpdateStudentResponse = {
   message: string;
 };
 
-const apiURL = "https://college-library-api.onrender.com/api/v1/students";
+const apiURL = "https://library-project-api.onrender.com/api/v1/students";
 
 export const fetchStudents = async () => {
   console.log("students data loaded");
