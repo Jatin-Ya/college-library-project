@@ -141,6 +141,13 @@ The backend api is constructed using Node and Express in typescript. It follows 
     <img src="./images/books page/issue book.png" width="80%"/>
 </p>
 
+# Future Scopes and Plans for project
+* User Authentication and Roles
+* Notifications and Reminders
+* Reservation System
+* Fine Management
+* Intigrating a recomendation model for recomending books to the students according to their previously issued books
+
 # Team
 The team behind the app consists of the following members:
 
