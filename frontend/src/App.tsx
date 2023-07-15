@@ -1,6 +1,10 @@
 import React from "react";
 import AppBar from "./components/Appbar/Appbar";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  redirect,
+  RouterProvider,
+} from "react-router-dom";
 import BooksView from "./views/BooksView";
 import { ChakraProvider } from "@chakra-ui/react";
 import { theme } from "./chakra/theme";
@@ -9,6 +13,10 @@ import StudentsView from "./views/StudentsView";
 import { fetchBooks } from "./api/bookService";
 
 const router = createBrowserRouter([
+  {
+    path: "/",
+    loader: () => redirect("/books"),
+  },
   {
     path: "/books",
     element: <BooksView />,
