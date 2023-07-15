@@ -6,7 +6,12 @@ import studentsRouter from "./routes/studentsRoutes";
 import cors from "cors";
 const app: express.Application = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST", "PATCH", "DELETE"],
+  })
+);
 app.use(express.json());
 app.use("/api/v1/books/", booksRouter);
 app.use("/api/v1/students/", studentsRouter);
