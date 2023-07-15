@@ -1,4 +1,4 @@
-version: '3.9'
+version: "3.9"
 services:
   books_service:
     build: ./books_service
@@ -27,3 +27,14 @@ services:
     depends_on:
       - books_service
       - students_service
+
+  frontend-server:
+    build:
+      context: ./frontend-server
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    tty: true
+    depends_on:
+      - backend
